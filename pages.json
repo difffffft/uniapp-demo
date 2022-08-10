@@ -1,0 +1,28 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+		"path": "pages/home/home",
+		"style": {
+			"navigationBarTitleText": "首页",
+			"enablePullDownRefresh": false
+		}
+	}],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F6F7FB",
+		"backgroundColor": "#F6F7FB"
+	},
+	"tabBar": {
+		"color": "#333",
+		"selectedColor": "#06F",
+		"list": [{
+			"pagePath": "pages/home/home",
+			"iconPath": "/static/tabbar/icon-me.png",
+			"selectedIconPath": "/static/tabbar/icon-me-select.png",
+			"text": "首页"
+		}]
+	}
+}
