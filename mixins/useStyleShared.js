@@ -1,5 +1,5 @@
 /**
- * 可以很方便的修改第三方组件库的UI
+ * 支持在scoped条件下，修改第三方组件库的UI
  */
 const useStyleShared = {
 	options: {

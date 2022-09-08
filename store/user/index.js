@@ -3,7 +3,7 @@ const state = {
 	uid: '',
 };
 const mutations = {
-	UPDATE_UID(state, uid) {
+	setUid(state, uid) {
 		state.uid = uid
 	}
 };

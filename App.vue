@@ -10,5 +10,5 @@
 	@import '~@/style/app.scss';
 	@import '~@/style/font.scss';
 	@import '~@/style/icon.scss';
-	@import "uview-ui/index.scss";
+	@import "@/uni_modules/uview-ui/index.scss";
 </style>

@@ -1,19 +1,5 @@
-import {
-	BASE_URL,
-	DEVICE_ID,
-	reqBaseUrl,
-} from "@/common/request.js"
+import http from "@/common/http"
 
+export const postMenu = (params, config = {}) => http.post('/ebapi/public_api/index', params, config)
 
-/**
- * @function reqGetGlobalConfig
- * @description 获取全局的各种配置
- * @author DIFFFFFFT 2022/07/22
- */
-export const reqGetGlobalConfig = (params = {}) => {
-	return reqBaseUrl({
-		url: '/global/config',
-		method: 'POST',
-		data: params
-	})
-}
+export const getMenu = (data) => http.get('/ebapi/public_api/index', data)
