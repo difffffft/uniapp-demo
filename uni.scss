@@ -1,6 +1,6 @@
-//	Uniapp主题
-@import 'style/base.scss';
+//  项目的变量
+@import 'style/variables.module.scss';
 //	uView主题
 @import '@/uni_modules/uview-ui/theme.scss';
-//  项目主题
-@import 'style/theme.scss';
+//	Uniapp主题
+@import 'style/uni.module.scss';

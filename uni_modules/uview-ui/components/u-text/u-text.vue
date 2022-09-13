@@ -1,18 +1,18 @@
 <template>
     <view
         class="u-text"
-        :class="[]"
         v-if="show"
         :style="{
             margin: margin,
-			justifyContent: align === 'left' ? 'flex-start' : align === 'center' ? 'center' : 'flex-end'
+			justifyContent: align === 'left' ? 'flex-start' : align === 'center' ? 'center' : 'flex-end',
+			alignItems: mode === 'price' ? 'flex-end' : 'center'
         }"
         @tap="clickHandler"
     >
         <text
             :class="['u-text__price', type && `u-text__value--${type}`]"
             v-if="mode === 'price'"
-            :style="[valueStyle]"
+            :style="[prefixValueStyle]"
             >￥</text
         >
         <view class="u-text__prefix-icon" v-if="prefixIcon">
@@ -56,7 +56,8 @@
             :style="[valueStyle]"
             :class="[
                 type && `u-text__value--${type}`,
-                lines && `u-line-${lines}`
+                lines && `u-line-${lines}`,
+				mode === 'price' && 'league-gothic',
             ]"
             >{{ value }}</text
         >
@@ -111,6 +112,19 @@ export default {
     mixins: [uni.$u.mpMixin, uni.$u.mixin, value, props],
     // #endif
     computed: {
+		prefixValueStyle() {
+		    const style = {
+		        textDecoration: this.decoration,
+		        fontWeight: this.bold ? 'bold' : 'normal',
+		        wordWrap: this.wordWrap,
+		    }
+		    !this.type && (style.color = this.color)
+		    this.isNvue && this.lines && (style.lines = this.lines)
+		    this.lineHeight &&
+		        (style.lineHeight = uni.$u.addUnit(this.lineHeight))
+		    !this.isNvue && this.block && (style.display = 'block')
+		    return uni.$u.deepMerge(style, uni.$u.addStyle(this.customStyle))
+		},
         valueStyle() {
             const style = {
                 textDecoration: this.decoration,
