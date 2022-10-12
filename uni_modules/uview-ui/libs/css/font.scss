@@ -1,9 +1,10 @@
 @font-face {
-  font-family: 'league-gothic';
-  src: url('@/uni_modules/uview-ui/libs/assets/league-gothic.otf') format('opentype');
+  font-family: 'D-DIN-PRO-700';
+  src: url('@/uni_modules/uview-ui/libs/assets/D-DIN-PRO/D-DIN-PRO-700-Bold.otf') format('opentype');
 }
 
-.league-gothic{
-	font-family: 'league-gothic';
-	line-height: 1;
+.D-DIN-PRO {
+  font-family: 'D-DIN-PRO-700', serif;
 }
+
+

@@ -57,7 +57,7 @@
             :class="[
                 type && `u-text__value--${type}`,
                 lines && `u-line-${lines}`,
-				mode === 'price' && 'league-gothic',
+				mode === 'price' && 'D-DIN-PRO',
             ]"
             >{{ value }}</text
         >
