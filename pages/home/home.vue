@@ -1,9 +1,6 @@
 <template>
 	<view class="page-home">
-		<u-button :loading="usePhoneLoginLoading" text="jiaz"></u-button>
-		<button open-type="getPhoneNumber" hover-class="none" @getphonenumber="handleLogin">{{ '点击登录' }}</button>
-		
-		<u-text mode="price" text="3214" size="50rpx"></u-text>
+		<!-- <button open-type="getPhoneNumber" hover-class="none" @getphonenumber="handleLogin">{{ '点击登录' }}</button> -->
 	</view>
 </template>
 
@@ -12,9 +9,10 @@
 		postMenu
 	} from '@/api'
 	import usePhoneLogin from '@/mixins/usePhoneLogin'
-
+	
+	
 	export default {
-		mixins: [usePhoneLogin],
+		// mixins: [headerMixin],
 		data() {
 			return {
 				loading: false
@@ -23,20 +21,13 @@
 		computed: {
 
 		},
+		created() {
+			uni.navigateTo({
+				url:'/pages/er/er'
+			})
+		},
 		async mounted() {
-			// console.log(this.usePhoneLoginLoading);
-			// this.__usePhoneLogin__loading__ = true
 			
-			// this.loading = true
-			// try {
-			// 	await postMenu({
-			// 		name: "小明",
-			// 		password: "123456"
-			// 	})
-			// } catch (e) {
-			// 	console.log("error",e);
-			// 	//TODO handle the exception
-			// }
 		},
 		methods: {
 			handleUsePhoneLoginSuccess(o) {

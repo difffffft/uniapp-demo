@@ -3,7 +3,8 @@
  */
 const useStyleShared = {
 	options: {
-		styleIsolation: 'shared'
+		styleIsolation: 'shared',
+		multipleSlots: true,
 	},
 }
 

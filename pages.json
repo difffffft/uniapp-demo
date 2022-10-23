@@ -14,6 +14,16 @@
             }
             
         }
+        ,{
+            "path" : "pages/er/er",
+            "style" :                                                                                    
+            {
+				"navigationStyle": "custom",
+                "navigationBarTitleText": "二级页面",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
