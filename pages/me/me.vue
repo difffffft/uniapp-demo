@@ -1,5 +1,5 @@
 <template>
-	<view class="page-me">
+	<view class="page page-me">
 		
 	</view>
 </template>

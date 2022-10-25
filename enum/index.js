@@ -1,8 +1,4 @@
-import {
-	reactive
-} from 'vue';
-
-export const SHOP_ORDER_TYPE = reactive({
+export const SHOP_ORDER_TYPE = {
 	//待付款
 	WAIT_PAY: 0,
 	//待发货
@@ -17,4 +13,4 @@ export const SHOP_ORDER_TYPE = reactive({
 	HAVE_TK: 5,
 	//全部
 	ALL: 6,
-})
+}

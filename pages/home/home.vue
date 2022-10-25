@@ -1,5 +1,5 @@
 <template>
-	<view class="page-home">
+	<view class="page page-home">
 		<!-- <button open-type="getPhoneNumber" hover-class="none" @getphonenumber="handleLogin">{{ '点击登录' }}</button> -->
 	</view>
 </template>
