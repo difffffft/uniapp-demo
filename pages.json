@@ -5,26 +5,21 @@
 			"navigationBarTitleText": "首页",
 			"enablePullDownRefresh": false
 		}
-	}    ,{
-            "path" : "pages/me/me",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "我的",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/er/er",
-            "style" :                                                                                    
-            {
-				"navigationStyle": "custom",
-                "navigationBarTitleText": "二级页面",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	}, {
+		"path": "pages/me/me",
+		"style": {
+			"navigationBarTitleText": "我的",
+			"enablePullDownRefresh": false
+		}
+
+	}, {
+		"path": "pages/login-wx/login-wx",
+		"style": {
+			"navigationBarTitleText": "微信一件登录",
+			"enablePullDownRefresh": false
+		}
+
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",

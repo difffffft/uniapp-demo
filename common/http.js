@@ -1,17 +1,22 @@
-import { BASE_URL } from "@/config"
+import {
+	BASE_URL
+} from "@/config"
 
-//全局配置
-uni.$u.http.setConfig((config) => {
+import useHttp from '@/uni_modules/uview-ui/libs/luch-request/core/Request'
+const http = new useHttp()
+
+//配置
+http.setConfig((config) => {
 	config.baseURL = BASE_URL
 	return config
 })
 
 //请求拦截
-uni.$u.http.interceptors.request.use((config) => {
+http.interceptors.request.use((config) => {
 	config.header = {
 		...config.header,
-		// Token: uni.getStorageSync("token") || 'TokenNull',
-		// Sign: 'sign',
+		Token: uni.getStorageSync("token"),
+		Sign: 'sign',
 	}
 	return config
 }, config => {
@@ -19,14 +24,20 @@ uni.$u.http.interceptors.request.use((config) => {
 })
 
 //响应拦截
-uni.$u.http.interceptors.response.use((response) => {
-	if (response.data.code !== 200)
-		return Promise.reject(response)
+http.interceptors.response.use((response) => {
 	if (response.data.code !== '00000')
-		return Promise.reject(response)
+		return Promise.reject(response.data)
 	return response.data
 }, (response) => {
-	return Promise.reject(response)
+	const {
+		statusCode
+	} = response
+	if (!statusCode) {
+		uni.$u.toast("请检查你的网络连接或服务器状态")
+		return Promise.reject("请检查你的网络连接")
+	}
+	uni.$u.toast(response.statusCode)
+	return Promise.reject(response.statusCode)
 })
 
-export default uni.$u.http
+export default http

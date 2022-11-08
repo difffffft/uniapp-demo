@@ -2,4 +2,4 @@
 export const DEVELOPMENT_ENV = true
 
 //请求地址
-export const BASE_URL = DEVELOPMENT_ENV ? "http://www.dev.com" : "https://www.pro.com"
+export const BASE_URL = DEVELOPMENT_ENV ? "http://www.devssssssssssss.com" : "https://www.pro.com"

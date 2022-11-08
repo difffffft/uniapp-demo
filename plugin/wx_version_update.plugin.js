@@ -1,5 +1,6 @@
 export default {
 	install: function(Vue) {
+		// #ifdef MP-WEIXIN
 		const updateManager = uni.getUpdateManager();
 		updateManager.onCheckForUpdate(function(res) {
 			// 请求完新版本信息的回调
@@ -20,7 +21,6 @@ export default {
 				});
 			}
 		});
-
 		updateManager.onUpdateFailed(function(res) {
 			// 新的版本下载失败
 			uni.showModal({
@@ -34,5 +34,6 @@ export default {
 				}
 			});
 		});
+		// #endif
 	}
 }
