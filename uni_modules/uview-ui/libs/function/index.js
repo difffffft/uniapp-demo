@@ -1,5 +1,7 @@
 import test from './test.js'
-import { round } from './digit.js'
+import {
+	round
+} from './digit.js'
 /**
  * @description 如果value小于min，取min；如果value大于max，取max
  * @param {number} min 
@@ -278,29 +280,29 @@ if (!String.prototype.padStart) {
  * @param {String} fmt 格式化规则 yyyy:mm:dd|yyyy:mm|yyyy年mm月dd日|yyyy年mm月dd日 hh时MM分等,可自定义组合 默认yyyy-mm-dd
  * @returns {string} 返回格式化后的字符串
  */
- function timeFormat(dateTime = null, formatStr = 'yyyy-mm-dd') {
-  let date
+function timeFormat(dateTime = null, formatStr = 'yyyy-mm-dd') {
+	let date
 	// 若传入时间为假值，则取当前时间
-  if (!dateTime) {
-    date = new Date()
-  }
-  // 若为unix秒时间戳，则转为毫秒时间戳（逻辑有点奇怪，但不敢改，以保证历史兼容）
-  else if (/^\d{10}$/.test(dateTime?.toString().trim())) {
-    date = new Date(dateTime * 1000)
-  }
-  // 若用户传入字符串格式时间戳，new Date无法解析，需做兼容
-  else if (typeof dateTime === 'string' && /^\d+$/.test(dateTime.trim())) {
-    date = new Date(Number(dateTime))
-  }
-  // 其他都认为符合 RFC 2822 规范
-  else {
-    // 处理平台性差异，在Safari/Webkit中，new Date仅支持/作为分割符的字符串时间
-    date = new Date(
-      typeof dateTime === 'string'
-        ? dateTime.replace(/-/g, '/')
-        : dateTime
-    )
-  }
+	if (!dateTime) {
+		date = new Date()
+	}
+	// 若为unix秒时间戳，则转为毫秒时间戳（逻辑有点奇怪，但不敢改，以保证历史兼容）
+	else if (/^\d{10}$/.test(dateTime?.toString().trim())) {
+		date = new Date(dateTime * 1000)
+	}
+	// 若用户传入字符串格式时间戳，new Date无法解析，需做兼容
+	else if (typeof dateTime === 'string' && /^\d+$/.test(dateTime.trim())) {
+		date = new Date(Number(dateTime))
+	}
+	// 其他都认为符合 RFC 2822 规范
+	else {
+		// 处理平台性差异，在Safari/Webkit中，new Date仅支持/作为分割符的字符串时间
+		date = new Date(
+			typeof dateTime === 'string' ?
+			dateTime.replace(/-/g, '/') :
+			dateTime
+		)
+	}
 
 	const timeSource = {
 		'y': date.getFullYear().toString(), // 年
@@ -312,16 +314,16 @@ if (!String.prototype.padStart) {
 		// 有其他格式化字符需求可以继续添加，必须转化成字符串
 	}
 
-  for (const key in timeSource) {
-    const [ret] = new RegExp(`${key}+`).exec(formatStr) || []
-    if (ret) {
-      // 年可能只需展示两位
-      const beginIndex = key === 'y' && ret.length === 2 ? 2 : 0
-      formatStr = formatStr.replace(ret, timeSource[key].slice(beginIndex))
-    }
-  }
+	for (const key in timeSource) {
+		const [ret] = new RegExp(`${key}+`).exec(formatStr) || []
+		if (ret) {
+			// 年可能只需展示两位
+			const beginIndex = key === 'y' && ret.length === 2 ? 2 : 0
+			formatStr = formatStr.replace(ret, timeSource[key].slice(beginIndex))
+		}
+	}
 
-  return formatStr
+	return formatStr
 }
 
 /**
@@ -453,12 +455,20 @@ function queryParams(data = {}, isPrefix = true, arrayFormat = 'brackets') {
  * 显示消息提示框
  * @param {String} title 提示的内容，长度与 icon 取值有关。
  * @param {Number} duration 提示的延迟时间，单位毫秒，默认：2000
+ * UPDATE_TIME:2022/11/10
  */
-function toast(title, duration = 2000) {
+function toast(title, callback) {
+	let duration = 2000
 	uni.showToast({
 		title: String(title),
 		icon: 'none',
-		duration
+		duration,
+		success: async () => {
+			await sleep(duration)
+			if (callback && typeof callback == "function") {
+				callback()
+			}
+		}
 	})
 }
 
@@ -517,7 +527,7 @@ function priceFormat(number, decimals = 0, decimalPoint = '.', thousandsSeparato
 	while (re.test(s[0])) {
 		s[0] = s[0].replace(re, `$1${sep}$2`)
 	}
-	
+
 	if ((s[1] || '').length < prec) {
 		s[1] = s[1] || ''
 		s[1] += new Array(prec - s[1].length + 1).join('0')

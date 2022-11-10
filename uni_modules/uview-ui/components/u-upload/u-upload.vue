@@ -399,7 +399,7 @@
 	$u-upload-message-margin-top:5px !default;
 	$u-upload-button-width:80px !default;
 	$u-upload-button-height:$u-upload-button-width;
-	$u-upload-button-bgColor:rgb(244, 245, 247) !default;
+	$u-upload-button-bgColor:$app--page-bg-color !default;
 	$u-upload-button-border-radius:2px !default;
 	$u-upload-botton-margin: 0 8px 8px 0 !default;
 	$u-upload-text-font-size:11px !default;

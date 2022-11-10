@@ -1,5 +1,8 @@
 <template>
 	<view class="page page-home">
+		<view class="page-body">
+			
+		</view>
 	</view>
 </template>
 
@@ -7,23 +10,22 @@
 	export default {
 		data() {
 			return {
-			};
-		},
-		computed: {
 
-		},
-		created() {
-
+			}
 		},
 		async mounted() {
-			
+
 		},
 		methods: {
-			
+			handleClick() {
+				
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-
+	.page-body {
+		background-color: #fff;
+	}
 </style>
