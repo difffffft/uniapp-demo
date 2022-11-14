@@ -39,6 +39,10 @@ page {
   box-sizing: border-box;
 }
 
+.uni-actionsheet__cell{
+	padding: $app--page-margin !important;
+}
+
 // 横向排版
 .app--row{
 	display: flex;

@@ -10,13 +10,19 @@
 </template>
 
 <script>
+	import payMixin from '@/mixins/pay.mixin'
 	export default {
+		mixins:[payMixin],
 		data() {
 			return {
 			}
 		},
 		async mounted() {
-
+			this.pay({
+				fail(){
+					
+				}
+			})
 		},
 		methods: {
 			
