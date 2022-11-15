@@ -4,39 +4,52 @@
  * 支持方式:小程序/h5
  */
 const wx = require('@/libs/jweixin-module')
+import { reqPostTestV2 } from '@/api'
 
 export default {
 	data() {
 		return {
 			_payArgs: {},
+			_payPlatform: ''
 		};
 	},
 	methods: {
-		
-		_payCheckBrowser(){
-			let ua = navigator.userAgent.toLowerCase();
-			if (ua.match(/MicroMessenger/i) == "micromessenger") {
-				return '微信浏览器'
-			} else {
-				return '普通浏览器'
-			}
-		},
 
 		/**
-		 * 微信h5支付
+		 * 初始化一些参数
 		 */
-		_payWxH5() {
-			//发起请求
-			let ua = navigator.userAgent.toLowerCase();
-			if (ua.match(/MicroMessenger/i) == "micromessenger") {
-				return '微信浏览器'
-			} else {
-				return '普通浏览器'
+		_payInit() {
+			let platform = ''
+			let _platform = uni.getSystemInfoSync().platform
+			switch (_platform) {
+				case 'android':
+					platform = 'Android'
+					break;
+				case 'ios':
+					platform = 'iOS'
+					break;
+				default:
+					platform = 'Wap'
+					break;
 			}
+			this._payPlatform = platform
+		},
 
-			//返回数据
+		async _payTest() {
+			const res = await reqPostTestV2()
+		},
+
+
+
+		/**
+		 * 使用微信自带的浏览器进行支付操作
+		 */
+		_payWxH5WxBrowser() {
+			this._payTest()
+			return
+
 			wx.config({
-				debug: false,
+				debug: true,
 				appId: res.appId,
 				timestamp: res.timeStamp,
 				nonceStr: res.nonceStr,
@@ -49,29 +62,83 @@ export default {
 					timestamp: res.timeStamp,
 					nonceStr: res.nonceStr,
 					package: res.package,
-					signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+					signType: 'MD5',
 					paySign: res.paySign,
-					success(res) {
-						console.log('success:' + JSON.stringify(res));
+					success: (res) => {
 
-						//用定时器查询是否为已完成状态（限制执行次数为5次）
-						// var repeat = 5;
-						// that.timer = setInterval(function() {
-						// 	if (repeat <= 0) {
-						// 		clearInterval(timer);
-						// 	} else {
-						// 		repeat--;
-						// 		that.QueryPayResult() //获取到支付状态
-						// 	}
-						// }, 1000);
 					},
-					fail(err) {
+					fail: (err) => {
 						this._payError("支付异常")
 					}
 				})
 			})
+		},
 
-			console.log("微信h5支付");
+
+		/**
+		 * 预支付，拿到相应的参数，用来调起支付
+		 */
+		async _payWxH5NormalBrowserPrepayment() {
+			// const res = await reqPostTestV2()
+			console.log(this._payArgs.order_id);
+		},
+		/**
+		 * 使用第三方浏览器进行支付操作
+		 */
+		_payWxH5NormalBrowser() {
+			// this._payTest()
+			this._payWxH5NormalBrowserPrepayment()
+		},
+
+
+		/**
+		 * 支付宝h5使用第三方浏览器进行支付操作
+		 */
+		_payAlipayH5NormalBrowser() {
+			console.log('支付宝支付');
+		},
+
+		/**
+		 * 检查浏览器环境
+		 */
+		_payCheckBrowser() {
+			let ua = navigator.userAgent.toLowerCase();
+			if (ua.match(/MicroMessenger/i) == "micromessenger") {
+				return 'wx_browser'
+			} else {
+				return 'normal_browser'
+			}
+		},
+
+		/**
+		 * 微信h5支付
+		 */
+		_payWxH5() {
+			//发起请求
+			if (this._payCheckBrowser() === 'wx_browser') {
+				this._payWxH5WxBrowser()
+				return
+			}
+			if (this._payCheckBrowser() === 'normal_browser') {
+				this._payWxH5NormalBrowser()
+				return
+			}
+		},
+
+
+		/**
+		 * 支付宝h5支付
+		 */
+		_payAlipayH5() {
+			//发起请求
+			if (this._payCheckBrowser() === 'wx_browser') {
+				alert("请使用浏览器打开");
+				return
+			}
+			if (this._payCheckBrowser() === 'normal_browser') {
+				this._payAlipayH5NormalBrowser()
+				return
+			}
 		},
 
 		/**
@@ -119,7 +186,9 @@ export default {
 						// #endif
 					}
 					if (itemList[res.tapIndex] === '支付宝支付') {
-
+						// #ifdef H5
+						this._payAlipayH5()
+						// #endif
 						return
 					}
 				},
@@ -134,6 +203,7 @@ export default {
 		 */
 		pay(args) {
 			this._payArgs = uni.$u.deepClone(args)
+			this._payInit()
 			this._payChoosePlatform()
 		}
 	}

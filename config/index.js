@@ -2,4 +2,4 @@
 export const DEVELOPMENT_ENV = true
 
 //请求地址
-export const BASE_URL = DEVELOPMENT_ENV ? "http://localhost:8080" : "https://www.pro.com"
+export const BASE_URL = DEVELOPMENT_ENV ? "https://sit.rubyonly.cn/app/bridge" : "https://www.pro.com"
