@@ -229,6 +229,11 @@
 	@import "../../libs/css/components.scss";
 	$u-popup-flex:1 !default;
 	$u-popup-content-background-color: #fff !default;
+	
+	.u-popup__content{
+		min-height: 500rpx !important;
+		overflow: hidden;
+	}
 
 	.u-popup {
 		flex: $u-popup-flex;
