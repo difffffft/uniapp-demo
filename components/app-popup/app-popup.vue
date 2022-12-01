@@ -9,6 +9,13 @@
 </template>
 
 <script>
+	/**
+	 * 
+	 * 使用方法:
+	 * <app-popup v-model="show">
+			我是弹出的内容
+		</app-popup>
+	 */
 	export default {
 		name: "app-popup",
 		model: {
@@ -76,6 +83,11 @@
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0, 0, 0, 0.4);
+	}
+
+	//解决h5滚动穿透
+	::v-deep .uni-scroll-view{
+		overscroll-behavior-y: contain !important;
 	}
 
 	.app-popup-wrap {
