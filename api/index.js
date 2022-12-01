@@ -1,7 +1,5 @@
 import http from "@/common/http"
 
-export const reqGetTest = (data) => http.get('/get_test', data)
+export const reqGet = (data) => http.get('/get-user-info', data)
 
-export const reqPostTest = (params, config = {}) => http.post('/post_test', params, config)
-
-export const reqPostTestV2 = (params, config = {}) => http.post('/testip.php', params, config)
+export const reqPost = (params, config = {}) => http.post('/update-user-info', params, config)

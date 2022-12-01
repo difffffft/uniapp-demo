@@ -1,9 +1,3 @@
-<!-- <template>
-	<view class="HDSUAHDU ">
-
-	</view>
-</template> -->
-
 <script>
 	import WxVersionUpdateCheck from '@/plugin/wx_version_update.plugin';
 	export default {

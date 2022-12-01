@@ -1,10 +1,19 @@
 /**
- * 微信小程序一键登录
- * 可获取用户昵称/头像/电话等基本信息
+ * 微信小程序中使用手机号登录
+ * 使用方法
+ import wxLogin from "@/mixins/wx_login.mixin"
+ mixins: [wxLogin],
+ 
+ <u-button type="primary" open-type="getPhoneNumber" @getphonenumber="wxLogin" text="微信一键登录" shape="circle" size="large"></u-button>
+ 
+async handleWxLoginSuccess(e) {
+	await this.$store.dispatch("USER_LOGIN",e)
+}
  */
 export default {
 	data() {
 		return {
+			//私有属性
 			_wxLoginCode: '',
 		};
 	},
@@ -13,70 +22,56 @@ export default {
 	},
 	methods: {
 		/**
-		 * 获取微信用户的基本信息
+		 * 获取code
 		 */
-		_wxLoginGetUserProfile() {
-			uni.getUserProfile({
-				desc: "获取您的昵称、头像、地区和性别",
-				success: (e) => {
-					this._wxLoginCheck(() => {
-						if (this.handleWxLoginSuccess && (typeof this.handleWxLoginSuccess ==
-								"function")) {
-							e["code"] = this._wxLoginCode
-							this.handleWxLoginSuccess(e)
-						}
-					})
-				},
-				fail: (err) => {
-					console.log("用户拒绝登录");
-				}
-			});
-		},
-
-		/**
-		 * 每个微信账号对应的微信小程序，都有对应的code
-		 */
-		_wxLoginGuest(successCallBack) {
+		_wxLoginGuest() {
 			uni.login({
 				provider: 'weixin',
 				success: ({
 					code
 				}) => {
 					this._wxLoginCode = code
-					if (successCallBack) {
-						successCallBack()
-					}
 				},
 				fail: err => {
 					uni.$u.toast('uni.login error');
 				}
 			});
 		},
-
 		/**
-		 * 检查是否登录
+		 * 检查登录态是否过期
 		 */
-		_wxLoginCheck(successCallBack) {
+		_wxLoginCheckSession(e) {
 			uni.checkSession({
 				success: res => {
-					if (successCallBack) {
-						successCallBack()
+					if (this.handleWxLoginSuccess && (typeof this.handleWxLoginSuccess ==
+							"function")) {
+						this.handleWxLoginSuccess({
+							iv: e.detail.iv,
+							encryptedData: e.detail.encryptedData,
+							code: this._wxLoginCode
+						})
 					}
 				},
 				fail: err => {
-					this._wxLoginGuest(successCallBack)
+					this._wxLoginGuest()
 				}
 			})
 		},
-
-		/**
-		 *暴露给用户使用的方法
-		 */
-		wxLogin() {
-			if (uni.getUserProfile) {
-				this._wxLoginGetUserProfile()
-			} else {
-				uni.$u.toast("你的微信版本太低,请更新后再试")
+		wxLogin(e) {
+			//无权限
+			if (e.detail.errMsg === 'getPhoneNumber:fail no permission') {
+				uni.$u.toast('此小程序无登录权限');
+				return;
+			}
+			//用户拒绝授权
+			if (e.detail.errMsg === 'getPhoneNumber:fail user deny') {
+				uni.$u.toast('用户已拒绝,无法登录');
+				return;
+			}
+			//用户确认授权
+			if (e.detail.errMsg === 'getPhoneNumber:ok') {
+				this._wxLoginCheckSession(e);
+				return;
 			}
 		}
 	}

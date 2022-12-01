@@ -22,6 +22,10 @@ $app--item-bg-color: #FFFFFF;
 //一级标题颜色
 $app--title-color: #101010;
 
+/**
+ * 覆盖第三方组件库
+ */
+$u-primary: $app--primary-color;
 
 /**
  * 共享变量给JS用

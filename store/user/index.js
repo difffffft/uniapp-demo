@@ -1,24 +1,19 @@
-// 全局的data
 const state = {
-	uid: '',
+	login: false,
 };
 const mutations = {
-	setUid(state, uid) {
-		state.uid = uid
+	SET_USER_STATE(state, callback) {
+		callback && typeof callback === "function" && callback(state)
 	}
 };
-// 全局的methods
 const actions = {
-	async userLogin({
-		dispatch,
-		commit
-	}, data) {
-
+	async USER_LOGIN(store, data) {
+		store.commit('SET_USER_STATE', state => {
+			state.login = true
+		})
 	},
 };
-// 全局的computed
-const getters = {
-};
+const getters = {};
 export default {
 	state,
 	mutations,
