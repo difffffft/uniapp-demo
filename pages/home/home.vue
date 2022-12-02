@@ -2,7 +2,7 @@
 	<view class="page page-home">
 		<!-- 页面内容 -->
 		<view class="page-body">
-	
+			
 		</view>
 	</view>
 </template>
@@ -11,6 +11,7 @@
 	export default {
 		data() {
 			return {
+				
 			}
 		},
 		async mounted() {

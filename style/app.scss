@@ -40,6 +40,18 @@ page {
 }
 
 
+button[type=primary] {
+    background-color: $app--primary-color;
+	color: white;
+}
+button[type=success] {
+    background-color: $app--success-color;
+	color: white;
+}
+button[type=success]:active {
+    background-color: darken($color: $app--success-color, $amount: 8%);
+}
+
 /* 统一ActionSheet在各平台的样式 START */
 uni-actionsheet .uni-actionsheet {
     left: 0px;

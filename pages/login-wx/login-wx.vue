@@ -14,7 +14,7 @@
 		mixins: [wxLogin],
 		data() {
 			return {
-
+				
 			};
 		},
 		methods: {
